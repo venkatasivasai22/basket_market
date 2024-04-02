@@ -6,7 +6,7 @@ Rules = joblib.load('association_rules.pkl')
 
 def recommend_items(rules, input_item):
     filtered_rules = rules[rules['antecedents'].apply(lambda x: input_item in x)]
-    filtered_rules = filtered_rules.sort_values(by='support', ascending=False)
+    filtered_rules = filtered_rules.sort_values(by=['lift', 'confidence', 'support'], ascending=False)
     recommended_items = filtered_rules['consequents'].tolist()
     return set(recommended_items[0]) if recommended_items else set()
 
